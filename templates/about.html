@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us – Praja Seva</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="/static/js/language.js"></script>
+
+<style>
+/* ========== CSS VARIABLES ========== */
+:root {
+    --primary: #123B7A;
+    --secondary: #1D5FA7;
+    --accent: #D99A00;
+    --bg: #F5F7FA;
+    --surface: #FFFFFF;
+    --text-primary: #172033;
+    --text-secondary: #5F6B7A;
+    --border: #E2E7EF;
+    --radius: 8px;
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+    --transition: 0.2s ease-in-out;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ========== NAVBAR ========== */
+nav {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow-sm);
+}
+.nav-brand {
+    display: flex; align-items: center; gap: 0.5rem;
+    color: var(--primary); font-size: 1.5rem; font-weight: 700; text-decoration: none;
+}
+.nav-menu { display: flex; gap: 2rem; align-items: center; }
+.nav-menu a {
+    color: var(--text-secondary); text-decoration: none; font-size: 0.95rem; font-weight: 500; transition: var(--transition);
+}
+.nav-menu a:hover, .nav-menu a.active { color: var(--primary); }
+.nav-actions { display: flex; align-items: center; gap: 1rem; }
+.lang-select-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.lang-select-wrapper .lucide {
+    position: absolute;
+    left: 8px;
+    pointer-events: none;
+    color: var(--text-primary);
+    width: 16px; height: 16px;
+}
+.lang-selector {
+    appearance: none;
+    background: transparent;
+    border: 1px solid var(--border);
+    padding: 0.4rem 1.5rem 0.4rem 2rem;
+    border-radius: var(--radius);
+    color: var(--text-primary);
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    font-family: inherit;
+    transition: var(--transition);
+}
+.lang-selector:hover, .lang-selector:focus {
+    border-color: var(--primary);
+    outline: none;
+}
+.menu-btn { display: none; background: none; border: none; cursor: pointer; color: var(--text-primary); }
+
+/* ========== HEADER ========== */
+.page-header {
+    background: linear-gradient(to bottom, #EBF1FA, var(--bg));
+    padding: 4rem 5% 3rem;
+    text-align: center;
+}
+.page-header h1 { color: var(--primary); font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; }
+.page-header p { color: var(--text-secondary); font-size: 1.1rem; max-width: 700px; margin: 0 auto; }
+
+/* ========== CONTENT ========== */
+.content-section {
+    padding: 0 5% 4rem;
+    max-width: 1000px;
+    margin: 0 auto;
+    width: 100%;
+    flex: 1;
+}
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 4rem;
+}
+.about-card {
+    background: var(--surface);
+    padding: 2.5rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
+}
+.about-card h2 { color: var(--primary); display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; }
+.about-card p { color: var(--text-secondary); }
+
+.feature-list { margin-top: 2rem; }
+.feature-list h2 { color: var(--primary); text-align: center; margin-bottom: 2rem; }
+.features-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;
+}
+.feature-item {
+    background: var(--surface); padding: 1.5rem; border-radius: var(--radius);
+    border: 1px solid var(--border); display: flex; align-items: flex-start; gap: 1rem;
+}
+.feature-icon {
+    background: #EBF1FA; color: var(--primary); padding: 0.8rem; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+}
+.feature-text p { color: var(--text-secondary); font-weight: 500; }
+
+.stats-container {
+    display: flex; justify-content: space-around; background: var(--primary); color: var(--surface);
+    padding: 3rem 1rem; border-radius: var(--radius); margin-top: 4rem; flex-wrap: wrap; gap: 2rem;
+}
+.stat-item { text-align: center; }
+.stat-number { font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--accent); }
+.stat-label { font-size: 1rem; opacity: 0.9; }
+
+/* ========== FOOTER ========== */
+footer {
+    background: var(--primary); color: var(--surface);
+    text-align: center; padding: 1.5rem 5%; font-size: 0.9rem; opacity: 0.9;
+}
+
+@media(max-width: 768px) {
+    .nav-menu { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: var(--surface); flex-direction: column; padding: 1rem 5%; box-shadow: var(--shadow-sm); border-top: 1px solid var(--border); }
+    .nav-menu.show { display: flex; }
+    .menu-btn { display: block; }
+    .about-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav>
+    <a href="/" class="nav-brand">
+        <i data-lucide="landmark"></i> Praja Seva
+    </a>
+    
+    <div class="nav-menu" id="navMenu">
+        <a href="/" data-i18n="nav_home">Home</a>
+        <a href="/cards" data-i18n="nav_cards">Cards</a>
+        <a href="/schemes" data-i18n="nav_schemes">Schemes</a>
+        <a href="/helpline" data-i18n="nav_helplines">Helplines</a>
+        <a href="/about" class="active" data-i18n="nav_about">About</a>
+        <a href="/contact" data-i18n="nav_contact">Contact</a>
+    </div>
+
+    <div class="nav-actions">
+        <div class="lang-select-wrapper">
+            <i data-lucide="languages"></i>
+            <select class="lang-selector" id="langSelector" onchange="handleLangChange(this.value)">
+                <option value="en">English</option>
+                <option value="te">తెలుగు</option>
+                <option value="hi">हिन्दी</option>
+            </select>
+        </div>
+        <button class="menu-btn" onclick="toggleMenu()">
+            <i data-lucide="menu"></i>
+        </button>
+    </div>
+</nav>
+
+<!-- HEADER -->
+<div class="page-header">
+    <h1 data-i18n="about_title">About Praja Seva</h1>
+    <p data-i18n="about_subtitle">Praja Seva is a citizen-centric digital platform designed to simplify government information and empower people with correct knowledge.</p>
+</div>
+
+<div class="content-section">
+    
+    <div class="about-grid">
+        <div class="about-card">
+            <h2 data-i18n="about_mission_title"><i data-lucide="target"></i> Our Mission</h2>
+            <p data-i18n="about_mission_desc">To provide accurate, step-by-step government service information in a simple and understandable manner for every citizen.</p>
+        </div>
+        <div class="about-card">
+            <h2 data-i18n="about_vision_title"><i data-lucide="eye"></i> Our Vision</h2>
+            <p data-i18n="about_vision_desc">To build a digitally aware society where citizens can access government services independently without intermediaries.</p>
+        </div>
+    </div>
+
+    <div class="about-card" style="margin-bottom: 4rem;">
+        <h2 data-i18n="about_what_title"><i data-lucide="info"></i> What is Praja Seva?</h2>
+        <p data-i18n="about_what_desc">Praja Seva is a social service web application that provides reliable information about government cards, welfare schemes, application processes, and emergency helplines. It acts as a single platform for citizens to understand government services clearly and confidently.</p>
+    </div>
+
+    <div class="feature-list">
+        <h2 data-i18n="about_features_title">Key Features</h2>
+        <div class="features-grid">
+            <div class="feature-item">
+                <div class="feature-icon"><i data-lucide="credit-card"></i></div>
+                <div class="feature-text"><p data-i18n="about_feat_1">Detailed information on government cards and certificates</p></div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon"><i data-lucide="landmark"></i></div>
+                <div class="feature-text"><p data-i18n="about_feat_2">Welfare schemes with eligibility and benefits</p></div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon"><i data-lucide="mouse-pointer-click"></i></div>
+                <div class="feature-text"><p data-i18n="about_feat_3">Step-by-step online and offline application guidance</p></div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon"><i data-lucide="phone-call"></i></div>
+                <div class="feature-text"><p data-i18n="about_feat_4">Emergency and public service helplines</p></div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon"><i data-lucide="bot"></i></div>
+                <div class="feature-text"><p data-i18n="about_feat_5">AI chatbot with multilingual support</p></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="stats-container">
+        <div class="stat-item">
+            <div class="stat-number">10+</div>
+            <div class="stat-label" data-i18n="about_stat_cards">Government Cards</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">8+</div>
+            <div class="stat-label" data-i18n="about_stat_schemes">Welfare Schemes</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">14+</div>
+            <div class="stat-label" data-i18n="about_stat_helplines">Emergency Helplines</div>
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    <span data-i18n="footer_copyright">© 2026 Praja Seva. All rights reserved.</span>
+</footer>
+
+<script>
+lucide.createIcons();
+function toggleMenu() { document.getElementById('navMenu').classList.toggle('show'); }
+function handleLangChange(val) { changeLanguage(val); }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Government Schemes – Praja Seva</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="/static/js/language.js"></script>
+
+<style>
+/* ========== CSS VARIABLES ========== */
+:root {
+    --primary: #123B7A;
+    --secondary: #1D5FA7;
+    --accent: #D99A00;
+    --bg: #F5F7FA;
+    --surface: #FFFFFF;
+    --text-primary: #172033;
+    --text-secondary: #5F6B7A;
+    --border: #E2E7EF;
+    --success: #16845B;
+    --danger: #C0392B;
+    --radius: 8px;
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+    --shadow-lg: 0 10px 24px rgba(0,0,0,0.1);
+    --transition: 0.2s ease-in-out;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ========== NAVBAR ========== */
+nav {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow-sm);
+}
+.nav-brand {
+    display: flex; align-items: center; gap: 0.5rem;
+    color: var(--primary); font-size: 1.5rem; font-weight: 700; text-decoration: none;
+}
+.nav-menu { display: flex; gap: 2rem; align-items: center; }
+.nav-menu a {
+    color: var(--text-secondary); text-decoration: none; font-size: 0.95rem; font-weight: 500; transition: var(--transition);
+}
+.nav-menu a:hover, .nav-menu a.active { color: var(--primary); }
+.nav-actions { display: flex; align-items: center; gap: 1rem; }
+.lang-select-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.lang-select-wrapper .lucide {
+    position: absolute;
+    left: 8px;
+    pointer-events: none;
+    color: var(--text-primary);
+    width: 16px; height: 16px;
+}
+.lang-selector {
+    appearance: none;
+    background: transparent;
+    border: 1px solid var(--border);
+    padding: 0.4rem 1.5rem 0.4rem 2rem;
+    border-radius: var(--radius);
+    color: var(--text-primary);
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    font-family: inherit;
+    transition: var(--transition);
+}
+.lang-selector:hover, .lang-selector:focus {
+    border-color: var(--primary);
+    outline: none;
+}
+.menu-btn { display: none; background: none; border: none; cursor: pointer; color: var(--text-primary); }
+
+/* ========== HEADER ========== */
+.page-header {
+    background: linear-gradient(to bottom, #EBF1FA, var(--bg));
+    padding: 4rem 5% 2rem;
+    text-align: center;
+}
+.page-header h1 { color: var(--primary); font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem; }
+.page-header p { color: var(--text-secondary); font-size: 1.1rem; }
+
+/* ========== SEARCH BAR ========== */
+.search-container {
+    max-width: 600px;
+    margin: 0 auto 3rem;
+    padding: 0 5%;
+    position: relative;
+}
+.search-icon {
+    position: absolute;
+    left: calc(5% + 16px);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+}
+.search-input {
+    width: 100%;
+    padding: 1rem 1rem 1rem 3rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    font-size: 1rem;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+}
+.search-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(18, 59, 122, 0.1);
+}
+
+/* ========== GRID ========== */
+.content-section {
+    padding: 0 5% 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    flex: 1;
+}
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+.card-item {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    transition: var(--transition);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+}
+.card-item:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--secondary);
+}
+.card-item.hide { display: none; }
+.card-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px; background: #EBF1FA; color: var(--primary);
+    display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;
+}
+.card-item h3 { color: var(--text-primary); font-size: 1.1rem; margin-bottom: 0.5rem; }
+.card-item p { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem; flex-grow: 1;}
+.card-item .btn-view {
+    color: var(--secondary);
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+/* ========== MODAL ========== */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(4px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+    background: var(--surface);
+    width: 90%;
+    max-width: 600px;
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
+    max-height: 90vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+.modal-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.modal-header h2 { color: var(--primary); font-size: 1.4rem; display: flex; align-items: center; gap: 0.5rem;}
+.modal-close {
+    background: none; border: none; color: var(--text-secondary);
+    cursor: pointer; transition: var(--transition); padding: 0.5rem;
+}
+.modal-close:hover { color: var(--danger); }
+.modal-body { padding: 1.5rem; }
+.modal-body h4 { color: var(--primary); margin: 1.5rem 0 0.5rem; font-size: 1.1rem; }
+.modal-body p { margin-bottom: 0.5rem; color: var(--text-primary); }
+.modal-body ol, .modal-body ul { margin-left: 1.5rem; margin-bottom: 1rem; color: var(--text-secondary); }
+.modal-body li { margin-bottom: 0.4rem; }
+.modal-body a { color: var(--secondary); text-decoration: none; }
+.modal-body a:hover { text-decoration: underline; }
+
+/* ========== FOOTER ========== */
+footer {
+    background: var(--primary); color: var(--surface);
+    text-align: center; padding: 1.5rem 5%; font-size: 0.9rem; opacity: 0.9;
+}
+
+@media(max-width: 768px) {
+    .nav-menu { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: var(--surface); flex-direction: column; padding: 1rem 5%; box-shadow: var(--shadow-sm); border-top: 1px solid var(--border); }
+    .nav-menu.show { display: flex; }
+    .menu-btn { display: block; }
+    .page-header h1 { font-size: 2rem; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav>
+    <a href="/" class="nav-brand">
+        <i data-lucide="landmark"></i> Praja Seva
+    </a>
+    
+    <div class="nav-menu" id="navMenu">
+        <a href="/" data-i18n="nav_home">Home</a>
+        <a href="/cards" data-i18n="nav_cards">Cards</a>
+        <a href="/schemes" class="active" data-i18n="nav_schemes">Schemes</a>
+        <a href="/helpline" data-i18n="nav_helplines">Helplines</a>
+        <a href="/about" data-i18n="nav_about">About</a>
+        <a href="/contact" data-i18n="nav_contact">Contact</a>
+    </div>
+
+    <div class="nav-actions">
+        <div class="lang-select-wrapper">
+            <i data-lucide="languages"></i>
+            <select class="lang-selector" id="langSelector" onchange="handleLangChange(this.value)">
+                <option value="en">English</option>
+                <option value="te">తెలుగు</option>
+                <option value="hi">हिन्दी</option>
+            </select>
+        </div>
+        <button class="menu-btn" onclick="toggleMenu()">
+            <i data-lucide="menu"></i>
+        </button>
+    </div>
+</nav>
+
+<!-- HEADER -->
+<div class="page-header">
+    <h1 data-i18n="page_schemes_title">Government Welfare Schemes</h1>
+    <p data-i18n="page_schemes_subtitle">Explore government schemes, benefits and application procedures.</p>
+</div>
+
+<!-- SEARCH -->
+<div class="search-container">
+    <i data-lucide="search" class="search-icon" style="width: 20px; height: 20px;"></i>
+    <input type="text" id="searchInput" class="search-input" data-i18n-placeholder="search_placeholder_schemes" placeholder="Search welfare schemes..." onkeyup="filterSchemes()">
+</div>
+
+<div class="content-section">
+    <!-- GRID -->
+    <div class="grid" id="schemeGrid">
+        <div class="card-item" onclick="showScheme('pmkisan')">
+            <div class="card-icon"><i data-lucide="tractor"></i></div>
+            <h3 data-i18n="scheme_pmkisan">PM Kisan</h3>
+            <p data-i18n="scheme_pmkisan_desc">Financial support for farmers.</p>
+            <div class="btn-view"><span data-i18n="btn_view_details">View Details</span> <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i></div>
+        </div>
+        <div class="card-item" onclick="showScheme('pmay')">
+            <div class="card-icon"><i data-lucide="home"></i></div>
+            <h3 data-i18n="scheme_pmay">PM Awas Yojana</h3>
+            <p data-i18n="scheme_pmay_desc">Housing assistance scheme.</p>
+            <div class="btn-view"><span data-i18n="btn_view_details">View Details</span> <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i></div>
+        </div>
+        <div class="card-item" onclick="showScheme('ayushman')">
+            <div class="card-icon"><i data-lucide="heart-pulse"></i></div>
+            <h3 data-i18n="scheme_ayushman">Ayushman Bharat</h3>
+            <p data-i18n="scheme_ayushman_desc">Health insurance up to ₹5 lakh.</p>
+            <div class="btn-view"><span data-i18n="btn_view_details">View Details</span> <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i></div>
+        </div>
+        <div class="card-item" onclick="showScheme('ujjwala')">
+            <div class="card-icon"><i data-lucide="flame"></i></div>
+            <h3 data-i18n="scheme_ujjwala">Ujjwala Yojana</h3>
+            <p data-i18n="scheme_ujjwala_desc">Free LPG connections for women.</p>
+            <div class="btn-view"><span data-i18n="btn_view_details">View Details</span> <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i></div>
+        </div>
+        <div class="card-item" onclick="showScheme('atal')">
+            <div class="card-icon"><i data-lucide="piggy-bank"></i></div>
+            <h3 data-i18n="scheme_atal">Atal Pension Yojana</h3>
+            <p data-i18n="scheme_atal_desc">Monthly pension after retirement.</p>
+            <div class="btn-view"><span data-i18n="btn_view_details">View Details</span> <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i></div>
+        </div>
+        <div class="card-item" onclick="showScheme('scholarship')">
+            <div class="card-icon"><i data-lucide="graduation-cap"></i></div>
+            <h3 data-i18n="scheme_scholarship">Scholarships</h3>
+            <p data-i18n="scheme_scholarship_desc">Educational financial assistance.</p>
+            <div class="btn-view"><span data-i18n="btn_view_details">View Details</span> <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i></div>
+        </div>
+        <div class="card-item" onclick="showScheme('janani')">
+            <div class="card-icon"><i data-lucide="baby"></i></div>
+            <h3 data-i18n="scheme_janani">Janani Suraksha</h3>
+            <p data-i18n="scheme_janani_desc">Assistance for pregnant women.</p>
+            <div class="btn-view"><span data-i18n="btn_view_details">View Details</span> <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i></div>
+        </div>
+        <div class="card-item" onclick="showScheme('mudra')">
+            <div class="card-icon"><i data-lucide="briefcase"></i></div>
+            <h3 data-i18n="scheme_mudra">MUDRA Loan</h3>
+            <p data-i18n="scheme_mudra_desc">Loans for small entrepreneurs.</p>
+            <div class="btn-view"><span data-i18n="btn_view_details">View Details</span> <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i></div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="detailsModal" onclick="closeOnOverlay(event)">
+    <div class="modal">
+        <div class="modal-header">
+            <h2 id="modalTitle">Title</h2>
+            <button class="modal-close" onclick="closeDetails()" title="Close"><i data-lucide="x"></i></button>
+        </div>
+        <div class="modal-body" id="modalBody">
+            <!-- Content gets injected here -->
+        </div>
+    </div>
+</div>
+
+<footer>
+    <span data-i18n="footer_copyright">© 2026 Praja Seva. All rights reserved.</span>
+</footer>
+
+<script>
+lucide.createIcons();
+function toggleMenu() { document.getElementById('navMenu').classList.toggle('show'); }
+function handleLangChange(val) { changeLanguage(val); }
+
+function filterSchemes(){
+    let input = document.getElementById("searchInput").value.toLowerCase();
+    document.querySelectorAll(".card-item").forEach(card => {
+        card.classList.toggle("hide", !card.innerText.toLowerCase().includes(input));
+    });
+}
+
+const schemeDefinitions = {
+    pmkisan: { icon: "tractor", steps: { on: 3, off: 2 }, link: "https://pmkisan.gov.in" },
+    pmay: { icon: "home", steps: { on: 2, off: 1 }, link: "https://pmaymis.gov.in" },
+    ayushman: { icon: "heart-pulse", steps: { on: 1, off: 1 }, link: "https://pmjay.gov.in" },
+    ujjwala: { icon: "flame", steps: { on: 1, off: 1 }, link: "https://pmuy.gov.in" },
+    atal: { icon: "piggy-bank", steps: { on: 0, off: 1 }, link: "https://npscra.nsdl.co.in" },
+    scholarship: { icon: "graduation-cap", steps: { on: 1, off: 0 }, link: "https://scholarships.gov.in" },
+    janani: { icon: "baby", steps: { on: 0, off: 1 }, link: "https://nhm.gov.in" },
+    mudra: { icon: "briefcase", steps: { on: 0, off: 1 }, link: "https://mudra.org.in" }
+};
+
+let currentOpenScheme = null;
+
+function showScheme(sId){
+    currentOpenScheme = sId;
+    renderModal();
+    document.getElementById("detailsModal").classList.add("open");
+}
+
+function renderModal() {
+    if(!currentOpenScheme) return;
+    
+    let c = schemeDefinitions[currentOpenScheme];
+    let titleHtml = `<i data-lucide="${c.icon}" style="width:24px;height:24px;"></i> ${t('scheme_' + currentOpenScheme)}`;
+    
+    let bodyHtml = `<p><b>${t('eligibility')}</b> ${t('scheme_' + currentOpenScheme + '_el')}</p>`;
+    bodyHtml += `<p><b>${t('benefits')}</b> ${t('scheme_' + currentOpenScheme + '_ben')}</p>`;
+
+    // Online steps
+    if(c.steps.on > 0) {
+        bodyHtml += `<h4>💻 ${t('online_steps')}</h4><ol>`;
+        for(let i=1; i<=c.steps.on; i++){
+            bodyHtml += `<li>${t('scheme_' + currentOpenScheme + '_on' + i)}</li>`;
+        }
+        bodyHtml += `</ol>`;
+    }
+    
+    // Offline steps
+    if(c.steps.off > 0) {
+        bodyHtml += `<h4>🏢 ${t('offline_steps')}</h4><ol>`;
+        for(let i=1; i<=c.steps.off; i++){
+            bodyHtml += `<li>${t('scheme_' + currentOpenScheme + '_off' + i)}</li>`;
+        }
+        bodyHtml += `</ol>`;
+    }
+
+    bodyHtml += `<h4>🔗 ${t('official_website')}</h4><ul><li><a href="${c.link}" target="_blank">${c.link}</a></li></ul>`;
+    
+    document.getElementById("modalTitle").innerHTML = titleHtml;
+    document.getElementById("modalBody").innerHTML = bodyHtml;
+    
+    document.querySelector(".modal-close").setAttribute("title", t("close"));
+    
+    lucide.createIcons();
+}
+
+function reRenderModal() {
+    renderModal();
+}
+
+function closeDetails(){
+    document.getElementById("detailsModal").classList.remove("open");
+    currentOpenScheme = null;
+}
+
+function closeOnOverlay(event) {
+    if(event.target === document.getElementById("detailsModal")) {
+        closeDetails();
+    }
+}
+</script>
+
+</body>
+</html>

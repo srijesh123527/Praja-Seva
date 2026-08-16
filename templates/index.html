@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Praja Seva – Citizen Service Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="/static/js/language.js"></script>
+
+<style>
+/* ========== CSS VARIABLES ========== */
+:root {
+    --primary: #123B7A;
+    --secondary: #1D5FA7;
+    --accent: #D99A00;
+    --bg: #F5F7FA;
+    --surface: #FFFFFF;
+    --text-primary: #172033;
+    --text-secondary: #5F6B7A;
+    --border: #E2E7EF;
+    --success: #16845B;
+    --danger: #C0392B;
+    --radius: 8px;
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+    --shadow-lg: 0 10px 24px rgba(0,0,0,0.1);
+    --transition: 0.2s ease-in-out;
+}
+
+/* ========== RESET & BASE ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ========== NAVBAR ========== */
+nav {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow-sm);
+}
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--primary);
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-decoration: none;
+}
+.nav-menu {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+.nav-menu a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: var(--transition);
+}
+.nav-menu a:hover, .nav-menu a.active {
+    color: var(--primary);
+}
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.lang-select-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.lang-select-wrapper .lucide {
+    position: absolute;
+    left: 8px;
+    pointer-events: none;
+    color: var(--text-primary);
+    width: 16px; height: 16px;
+}
+.lang-selector {
+    appearance: none;
+    background: transparent;
+    border: 1px solid var(--border);
+    padding: 0.4rem 1.5rem 0.4rem 2rem;
+    border-radius: var(--radius);
+    color: var(--text-primary);
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    font-family: inherit;
+    transition: var(--transition);
+}
+.lang-selector:hover, .lang-selector:focus {
+    border-color: var(--primary);
+    outline: none;
+}
+.menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-primary);
+}
+
+/* ========== HERO ========== */
+.hero {
+    background: linear-gradient(to bottom, #EBF1FA, var(--bg));
+    padding: 5rem 5%;
+    text-align: center;
+}
+.hero h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+.hero p {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    max-width: 700px;
+    margin: 0 auto 2.5rem;
+}
+.hero-btns {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+.btn-primary {
+    background: var(--primary);
+    color: var(--surface);
+    padding: 0.8rem 1.5rem;
+    border-radius: var(--radius);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+    border: 2px solid var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.btn-primary:hover {
+    background: var(--secondary);
+    border-color: var(--secondary);
+}
+.btn-secondary {
+    background: var(--surface);
+    color: var(--primary);
+    padding: 0.8rem 1.5rem;
+    border-radius: var(--radius);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+    border: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.btn-secondary:hover {
+    border-color: var(--primary);
+}
+
+/* ========== SECTION TITLE ========== */
+.section {
+    padding: 4rem 5%;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+.section-header h2 {
+    font-size: 2rem;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+.section-header p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+}
+
+/* ========== SERVICES GRID ========== */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+.card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 2.5rem 2rem;
+    border: 1px solid var(--border);
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--secondary);
+}
+.icon-box {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    background: #EBF1FA;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+.card h3 {
+    color: var(--text-primary);
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+}
+.card p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+}
+.card-link {
+    color: var(--secondary);
+    text-decoration: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+}
+.card-link:hover {
+    color: var(--primary);
+}
+
+/* ========== TRUST SECTION ========== */
+.trust-section {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 4rem 5%;
+}
+.trust-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+.trust-item .lucide {
+    color: var(--accent);
+    margin-bottom: 1rem;
+    width: 32px;
+    height: 32px;
+}
+.trust-item h4 {
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+.trust-item p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* ========== CHATBOT ========== */
+.chatbot-widget {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 1000;
+}
+.chat-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: var(--surface);
+    border: none;
+    box-shadow: var(--shadow-lg);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+.chat-btn:hover {
+    transform: scale(1.05);
+    background: var(--secondary);
+}
+.chat-window {
+    display: none;
+    position: absolute;
+    bottom: 80px;
+    right: 0;
+    width: 340px;
+    background: var(--surface);
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    flex-direction: column;
+}
+.chat-window.open {
+    display: flex;
+}
+.chat-header {
+    background: var(--primary);
+    color: var(--surface);
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.chat-header-info h4 {
+    font-size: 1rem;
+    margin: 0;
+}
+.chat-header-info p {
+    font-size: 0.8rem;
+    opacity: 0.8;
+    margin: 0;
+}
+.chat-close {
+    background: none;
+    border: none;
+    color: var(--surface);
+    cursor: pointer;
+    opacity: 0.8;
+}
+.chat-close:hover {
+    opacity: 1;
+}
+.chat-body {
+    padding: 1rem;
+    height: 300px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background: #F8FAFC;
+}
+.chat-bubble {
+    max-width: 80%;
+    padding: 0.8rem 1rem;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+.chat-bubble.bot {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    align-self: flex-start;
+    border-bottom-left-radius: 4px;
+}
+.chat-bubble.user {
+    background: var(--primary);
+    color: var(--surface);
+    align-self: flex-end;
+    border-bottom-right-radius: 4px;
+}
+.chat-suggestions {
+    padding: 0.8rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+}
+.chat-suggestion-btn {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: var(--transition);
+}
+.chat-suggestion-btn:hover {
+    background: #EBF1FA;
+    color: var(--primary);
+    border-color: var(--primary);
+}
+.chat-input-area {
+    display: flex;
+    padding: 0.8rem;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+}
+.chat-input-area input {
+    flex: 1;
+    border: none;
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    outline: none;
+}
+.chat-input-area button {
+    background: none;
+    border: none;
+    color: var(--primary);
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.chat-voice-btn {
+    color: var(--text-secondary);
+}
+.chat-voice-btn.active {
+    color: var(--danger);
+    animation: pulse 1.5s infinite;
+}
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* ========== FOOTER ========== */
+footer {
+    background: var(--primary);
+    color: var(--surface);
+    margin-top: auto;
+}
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 4rem 5%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 3rem;
+}
+.footer-col h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+.footer-col p {
+    opacity: 0.8;
+    font-size: 0.9rem;
+}
+.footer-links {
+    list-style: none;
+}
+.footer-links li {
+    margin-bottom: 0.8rem;
+}
+.footer-links a {
+    color: var(--surface);
+    opacity: 0.8;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: var(--transition);
+}
+.footer-links a:hover {
+    opacity: 1;
+    padding-left: 4px;
+}
+.footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding: 1.5rem 5%;
+    text-align: center;
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+
+/* ========== MOBILE RESPONSIVE ========== */
+@media(max-width: 768px) {
+    .nav-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: var(--surface);
+        flex-direction: column;
+        padding: 1rem 5%;
+        box-shadow: var(--shadow-sm);
+        border-top: 1px solid var(--border);
+    }
+    .nav-menu.show {
+        display: flex;
+    }
+    .menu-btn {
+        display: block;
+    }
+    .hero h1 {
+        font-size: 2.2rem;
+    }
+    .hero-btns {
+        flex-direction: column;
+    }
+    .chat-window {
+        width: calc(100vw - 48px);
+        right: 0;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+    <a href="/" class="nav-brand">
+        <i data-lucide="landmark"></i>
+        Praja Seva
+    </a>
+    
+    <div class="nav-menu" id="navMenu">
+        <a href="/" class="active" data-i18n="nav_home">Home</a>
+        <a href="/cards" data-i18n="nav_cards">Cards</a>
+        <a href="/schemes" data-i18n="nav_schemes">Schemes</a>
+        <a href="/helpline" data-i18n="nav_helplines">Helplines</a>
+        <a href="/about" data-i18n="nav_about">About</a>
+        <a href="/contact" data-i18n="nav_contact">Contact</a>
+    </div>
+
+    <div class="nav-actions">
+        <div class="lang-select-wrapper">
+            <i data-lucide="languages"></i>
+            <select class="lang-selector" id="langSelector" onchange="handleLangChange(this.value)">
+                <option value="en">English</option>
+                <option value="te">తెలుగు</option>
+                <option value="hi">हिन्दी</option>
+            </select>
+        </div>
+        <button class="menu-btn" onclick="toggleMenu()">
+            <i data-lucide="menu"></i>
+        </button>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <h1 data-i18n="hero_title">Citizen Services, Simplified.</h1>
+    <p data-i18n="hero_subtitle">
+        Access reliable information about government cards, welfare schemes, application procedures and emergency services — all in one place.
+    </p>
+    <div class="hero-btns">
+        <a href="/cards" class="btn-primary">
+            <span data-i18n="hero_btn_explore">Explore Services</span>
+            <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i>
+        </a>
+        <a href="/helpline" class="btn-secondary">
+            <span data-i18n="hero_btn_helplines">View Helplines</span>
+        </a>
+    </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section">
+    <div class="section-header">
+        <h2 data-i18n="core_title">Our Core Services</h2>
+        <p data-i18n="core_subtitle">Reliable guidance for citizens, students, and farmers.</p>
+    </div>
+
+    <div class="grid">
+        <div class="card">
+            <div class="icon-box">
+                <i data-lucide="id-card" style="width: 28px; height: 28px;"></i>
+            </div>
+            <h3 data-i18n="card_gov_cards_title">Government Cards</h3>
+            <p data-i18n="card_gov_cards_desc">
+                Aadhaar, PAN, Voter ID, Ration Card, Driving Licence and more with online & offline steps.
+            </p>
+            <a href="/cards" class="card-link">
+                <span data-i18n="btn_explore_cards">Explore Cards</span>
+                <i data-lucide="chevron-right" style="width: 16px; height: 16px;"></i>
+            </a>
+        </div>
+
+        <div class="card">
+            <div class="icon-box">
+                <i data-lucide="briefcase-business" style="width: 28px; height: 28px;"></i>
+            </div>
+            <h3 data-i18n="card_welfare_schemes_title">Welfare Schemes</h3>
+            <p data-i18n="card_welfare_schemes_desc">
+                PM Kisan, PMAY, Ayushman Bharat, pensions, scholarships and other welfare schemes.
+            </p>
+            <a href="/schemes" class="card-link">
+                <span data-i18n="btn_explore_schemes">Explore Schemes</span>
+                <i data-lucide="chevron-right" style="width: 16px; height: 16px;"></i>
+            </a>
+        </div>
+
+        <div class="card">
+            <div class="icon-box">
+                <i data-lucide="phone-call" style="width: 28px; height: 28px;"></i>
+            </div>
+            <h3 data-i18n="card_emergency_helplines_title">Emergency Helplines</h3>
+            <p data-i18n="card_emergency_helplines_desc">
+                Police, ambulance, women & child safety, cyber crime, disaster and public service numbers.
+            </p>
+            <a href="/helpline" class="card-link">
+                <span data-i18n="btn_view_helplines">View Helplines</span>
+                <i data-lucide="chevron-right" style="width: 16px; height: 16px;"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- TRUST SECTION -->
+<section class="trust-section">
+    <div class="section-header" style="margin-bottom: 2rem;">
+        <h2 data-i18n="trust_title">Why Praja Seva?</h2>
+    </div>
+    <div class="trust-grid">
+        <div class="trust-item">
+            <i data-lucide="shield-check"></i>
+            <h4 data-i18n="trust_1_title">Reliable Information</h4>
+            <p data-i18n="trust_1_desc">Accurate, up-to-date details.</p>
+        </div>
+        <div class="trust-item">
+            <i data-lucide="file-check-2"></i>
+            <h4 data-i18n="trust_2_title">Simple Guidance</h4>
+            <p data-i18n="trust_2_desc">Step-by-step procedures.</p>
+        </div>
+        <div class="trust-item">
+            <i data-lucide="link"></i>
+            <h4 data-i18n="trust_3_title">Official Sources</h4>
+            <p data-i18n="trust_3_desc">Direct links to govt portals.</p>
+        </div>
+        <div class="trust-item">
+            <i data-lucide="users"></i>
+            <h4 data-i18n="trust_4_title">Citizen Friendly</h4>
+            <p data-i18n="trust_4_desc">Easy to use and accessible.</p>
+        </div>
+    </div>
+</section>
+
+<!-- CHATBOT -->
+<div class="chatbot-widget">
+    <div class="chat-window" id="chatBox">
+        <div class="chat-header">
+            <div class="chat-header-info">
+                <h4 data-i18n="chat_header">Praja Seva Assistant</h4>
+                <p data-i18n="chat_subtitle">How can we help?</p>
+            </div>
+            <button class="chat-close" onclick="toggleChat()">
+                <i data-lucide="x" style="width: 20px; height: 20px;"></i>
+            </button>
+        </div>
+        <div class="chat-body" id="chatBody">
+            <div class="chat-bubble bot" id="chatWelcomeBubble" data-i18n="chat_welcome">
+                Hello 👋 Ask me about cards, schemes, or helplines.
+            </div>
+        </div>
+        <div class="chat-suggestions">
+            <button class="chat-suggestion-btn" onclick="sendQuickMsg('chat_btn_aadhaar')" data-i18n="chat_btn_aadhaar">Aadhaar Card</button>
+            <button class="chat-suggestion-btn" onclick="sendQuickMsg('chat_btn_pmkisan')" data-i18n="chat_btn_pmkisan">PM Kisan</button>
+            <button class="chat-suggestion-btn" onclick="sendQuickMsg('chat_btn_women')" data-i18n="chat_btn_women">Women Helpline</button>
+        </div>
+        <div class="chat-input-area">
+            <button onclick="startVoiceChat()" class="chat-voice-btn" id="voiceBtn" title="Voice Input">
+                <i data-lucide="mic" style="width: 20px; height: 20px;"></i>
+            </button>
+            <input type="text" id="chatInput" data-i18n-placeholder="chat_placeholder" placeholder="Type a message..." onkeypress="handleEnter(event)">
+            <button onclick="sendMsg()" title="Send">
+                <i data-lucide="send" style="width: 20px; height: 20px;"></i>
+            </button>
+        </div>
+    </div>
+    <button class="chat-btn" onclick="toggleChat()">
+        <i data-lucide="message-circle" style="width: 28px; height: 28px;"></i>
+    </button>
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-content">
+        <div class="footer-col">
+            <div class="nav-brand" style="color: white; margin-bottom: 1rem;">
+                <i data-lucide="landmark"></i>
+                Praja Seva
+            </div>
+            <p data-i18n="footer_desc">A citizen-centric portal simplifying access to government services.</p>
+        </div>
+        <div class="footer-col">
+            <h3 data-i18n="footer_quick_links">Quick Links</h3>
+            <ul class="footer-links">
+                <li><a href="/" data-i18n="nav_home">Home</a></li>
+                <li><a href="/cards" data-i18n="nav_cards">Cards</a></li>
+                <li><a href="/schemes" data-i18n="nav_schemes">Schemes</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h3 data-i18n="footer_support">Support</h3>
+            <ul class="footer-links">
+                <li><a href="/helpline" data-i18n="nav_helplines">Helplines</a></li>
+                <li><a href="/about" data-i18n="nav_about">About Us</a></li>
+                <li><a href="/contact" data-i18n="nav_contact">Contact Us</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p data-i18n="footer_disclaimer">
+            Praja Seva is an informational platform. Users should verify important information with the respective official government department or website.
+        </p>
+        <p style="margin-top: 1rem;" data-i18n="footer_copyright">© 2026 Praja Seva. All rights reserved.</p>
+    </div>
+</footer>
+
+<script>
+lucide.createIcons();
+function toggleMenu() { document.getElementById('navMenu').classList.toggle('show'); }
+function handleLangChange(val) { changeLanguage(val); }
+
+/* ================= CHATBOT & VOICE ================= */
+// Voice support mappings
+const voiceLangs = {
+    'en': 'en-IN',
+    'te': 'te-IN',
+    'hi': 'hi-IN'
+};
+
+const kbMap = [
+    { keys: ["aadhaar","aadhar","uidai","ఆధార్","आधार"], replyKey: "kb_aadhaar_reply" },
+    { keys: ["pan","pan card","income tax","పాన్","पैन"], replyKey: "kb_pan_reply" },
+    { keys: ["voter","voter id","epic","ఓటర్","वोटर"], replyKey: "kb_voter_reply" },
+    { keys: ["ration","ration card","pds","రేషన్","राशन"], replyKey: "kb_ration_reply" },
+    { keys: ["driving","dl","డ్రైవింగ్","ड्राइविंग"], replyKey: "kb_driving_reply" },
+    { keys: ["rc","vehicle","ఆర్సీ","आरसी"], replyKey: "kb_rc_reply" },
+    { keys: ["pm kisan","farmer","kisan","కిసాన్","किसान"], replyKey: "kb_pmkisan_reply" },
+    { keys: ["pmay","awas","house","గృహ","आवास"], replyKey: "kb_pmay_reply" },
+    { keys: ["ayushman","health","pmjay","ఆయుష్మాన్","आयुष्मान"], replyKey: "kb_ayushman_reply" },
+    { keys: ["pension","atal","పెన్షన్","पेंशन"], replyKey: "kb_atal_reply" },
+    { keys: ["ujjwala","gas","ఉజ్వల","उज्ज्वला"], replyKey: "kb_ujjwala_reply" },
+    { keys: ["scholarship","student","స్కాలర్‌షిప్","छात्रवृत्ति"], replyKey: "kb_scholarship_reply" },
+    { keys: ["helpline","emergency","help","women","మహిళా","हेल्पलाइन"], replyKey: "kb_emergency_reply" },
+    { keys: ["hi","hello","hey","నమస్కారం","नमस्ते"], replyKey: "kb_hello_reply" }
+];
+
+function toggleChat(){
+    document.getElementById("chatBox").classList.toggle("open");
+}
+
+function handleEnter(e) {
+    if (e.key === 'Enter') sendMsg();
+}
+
+function sendQuickMsg(key) {
+    document.getElementById("chatInput").value = t(key);
+    sendMsg();
+}
+
+function sendMsg(userText = null){
+    let input = document.getElementById("chatInput");
+    let userMsg = userText || input.value.trim();
+    if(userMsg === "") return;
+
+    let body = document.getElementById("chatBody");
+
+    // Add user bubble
+    let userDiv = document.createElement("div");
+    userDiv.className = "chat-bubble user";
+    userDiv.innerText = userMsg;
+    body.appendChild(userDiv);
+
+    // Determine reply
+    let msgLower = userMsg.toLowerCase();
+    let reply = t("chat_fallback");
+    
+    for(let item of kbMap){
+        for(let key of item.keys){
+            if(msgLower.includes(key)){
+                reply = t(item.replyKey);
+                break;
+            }
+        }
+        if(reply !== t("chat_fallback")) break;
+    }
+
+    // Add bot bubble
+    setTimeout(() => {
+        let botDiv = document.createElement("div");
+        botDiv.className = "chat-bubble bot";
+        botDiv.innerText = reply;
+        body.appendChild(botDiv);
+        body.scrollTop = body.scrollHeight;
+        
+        // Speak if API available
+        if ('speechSynthesis' in window) {
+            let utterance = new SpeechSynthesisUtterance(reply);
+            utterance.lang = voiceLangs[currentLang];
+            speechSynthesis.speak(utterance);
+        }
+    }, 400);
+
+    input.value = "";
+    body.scrollTop = body.scrollHeight;
+}
+
+function startVoiceChat() {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+        alert("Voice recognition is not supported in your browser.");
+        return;
+    }
+    const recognition = new SpeechRecognition();
+    recognition.lang = voiceLangs[currentLang];
+    
+    let voiceBtn = document.getElementById("voiceBtn");
+    voiceBtn.classList.add("active");
+    
+    recognition.onresult = function(event) {
+        let transcript = event.results[0][0].transcript;
+        sendMsg(transcript);
+        voiceBtn.classList.remove("active");
+    };
+    
+    recognition.onerror = function(event) {
+        voiceBtn.classList.remove("active");
+    };
+    
+    recognition.start();
+}
+</script>
+
+</body>
+</html>
